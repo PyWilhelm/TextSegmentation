@@ -29,8 +29,8 @@ if __name__ == '__main__':
     raw_x, raw_y = generate_corpus('/Users/wilhelm/TextSegment/enwiki-latest-pages-articles1.xml-p000000010p000010000.bz2')
     all_x = []
     all_y = []
-    m, n = 2, 2
-    max = 1000000
+    m, n = 3, 3
+    max = 5000000
     count = 0
     for i in range(len(raw_x)):
         for j in range(len(raw_x[i])):
@@ -43,8 +43,8 @@ if __name__ == '__main__':
                 print(len(all_x), len(all_y))
                 pickle.dump(raw_x, open('training_x.dat', 'wb'))
                 pickle.dump(raw_y, open('training_y.dat', 'wb'))
-                pickle.dump(all_x, open('training_allx1.dat', 'wb'))
-                pickle.dump(all_y, open('training_ally1.dat', 'wb'))
+                pickle.dump(all_x, open('training_allx2.dat', 'wb'))
+                pickle.dump(all_y, open('training_ally2.dat', 'wb'))
                 break
         if count == max:
             break

@@ -6,7 +6,7 @@ np.random.seed(1337)  # for reproducibility
 from keras.preprocessing import sequence
 from keras.utils import np_utils
 from keras.models import Sequential
-from keras.layers.core import Dense, Dropout, Activation, Masking
+from keras.layers.core import Dense, Dropout, Activation, Masking, TimeDistributedDense
 from keras.layers.embeddings import Embedding
 from keras.layers.recurrent import LSTM
 from keras.datasets import imdb
@@ -14,7 +14,8 @@ from keras.datasets import imdb
 import gensim.models
 
 import pickle
-
+import logging
+logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 '''
     Train a LSTM on the IMDB sentiment classification task.
@@ -33,59 +34,47 @@ import pickle
 max_features = 20000
 # cut texts after this number of words (among top max_features most common
 # words)
-maxlen = 5
+maxlen = 10
 batch_size = 32
 print("Loading data...")
 #(X_train, y_train), (X_test, y_test) = imdb.load_data(nb_words=max_features,
 #                                                      test_split=0.2)
 
-print(gensim.models)
-raw_x = pickle.load(open('training_x.dat', 'rb'))
-print(raw_x[0])
-raw_y = pickle.load(open('training_y.dat', 'rb'))
-
-#model = gensim.models.Word2Vec(raw_x, workers=8)
-#print(model)
-#model.save('word2vec.dat')
-
+w2v = gensim.models.Word2Vec.load('word2vec.dat')
 
 
 all_x = pickle.load(open('training_allx1.dat', 'rb'))
 all_y = pickle.load(open('training_ally1.dat', 'rb'))
+window_size = 5
 
-all_x = [[ord(c) - ord('a') for c in x] for x in all_x]
+embeddings = np.zeros((len(all_x), 5, 10))
 
-print(len(all_x), len(all_y))
-
-
-
-
+for i, x in enumerate(all_x):
+    for j, k in enumerate(all_x[i]):
+        embeddings[i][j] = w2v[k]
 
 print("Pad sequences (samples x time)")
-all_x = sequence.pad_sequences(all_x, maxlen=maxlen)
 all_y = np.array(all_y)
-train_x = all_x[:800]
-train_y = all_y[:800]
-test_x = all_x[800:1000]
-test_y = all_y[800:1000]
-y = np.array(all_y)
+train_x = embeddings[:len(embeddings)*0.8]
+train_y = all_y[:len(embeddings)*0.8]
+test_x = embeddings[len(embeddings)*0.8:]
+test_y = all_y[len(embeddings)*0.8:]
+train_y, test_y = [np_utils.to_categorical(x, 4) for x in (train_y, test_y)]
 
+print('generate model')
 model = Sequential()
-M = Masking(mask_value=0)
-M._input_shape = train_x.shape
-model.add(M)
-model.add(LSTM(5))  # try using a GRU instead, for fun
+model.add(LSTM(128, input_shape=(5, 10)))
 model.add(Dropout(0.5))
-model.add(Dense(128, 1))
-model.add(Activation('sigmoid'))
-
+model.add(Dense(4))
+model.add(Activation('softmax'))
+print('compile')
 # try using different optimizers and different optimizer configs
-model.compile(loss='binary_crossentropy',
+model.compile(loss='categorical_crossentropy',
               optimizer='adam',
               class_mode="categorical")
 
 print("Train...")
-model.fit(train_x, train_y, batch_size=batch_size, nb_epoch=1,
+model.fit(train_x, train_y, batch_size=batch_size, nb_epoch=2,
           validation_data=(test_x, test_y),
           show_accuracy=True)
 score, acc = model.evaluate(test_x, test_y,
