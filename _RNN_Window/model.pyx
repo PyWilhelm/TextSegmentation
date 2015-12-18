@@ -18,14 +18,14 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 '''
-    Train a LSTM on the IMDB sentiment classification task.
-    The dataset is actually too small for LSTM to be of any advantage
+    Train a _LSTM on the IMDB sentiment classification task.
+    The dataset is actually too small for _LSTM to be of any advantage
     compared to simpler, much faster methods such as TF-IDF+LogReg.
     Notes:
     - RNNs are tricky. Choice of batch size is important,
     choice of loss and optimizer is critical, etc.
     Some configurations won't converge.
-    - LSTM loss decrease patterns during training can be quite different
+    - _LSTM loss decrease patterns during training can be quite different
     from what you see with CNNs/MLPs/etc.
     GPU command:
         THEANO_FLAGS=mode=FAST_RUN,device=gpu,floatX=float32 python imdb_lstm.py
@@ -43,11 +43,11 @@ print("Loading data...")
 w2v = gensim.models.Word2Vec.load('word2vec.dat')
 
 
-all_x = pickle.load(open('training_allx1.dat', 'rb'))
-all_y = pickle.load(open('training_ally1.dat', 'rb'))
+all_x = pickle.load(open('training_allx2.dat', 'rb'))
+all_y = pickle.load(open('training_ally2.dat', 'rb'))
 window_size = 5
 
-embeddings = np.zeros((len(all_x), 5, 10))
+embeddings = np.zeros((len(all_x), window_size, 10))
 
 for i, x in enumerate(all_x):
     for j, k in enumerate(all_x[i]):
@@ -63,7 +63,7 @@ train_y, test_y = [np_utils.to_categorical(x, 4) for x in (train_y, test_y)]
 
 print('generate model')
 model = Sequential()
-model.add(LSTM(128, input_shape=(5, 10)))
+model.add(LSTM(128, input_shape=(7, 10)))
 model.add(Dropout(0.5))
 model.add(Dense(4))
 model.add(Activation('softmax'))
