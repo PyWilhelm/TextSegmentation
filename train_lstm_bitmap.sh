@@ -7,7 +7,7 @@
 #BSUB -M 40960
 #BSUB -W 600
 #BSUB -x
-#BSUB -q kur3
+#BSUB -q kurs3
 #BSUB -R "select[ nvd && avx2 ]"
 
 cd /home/kurse/oe14ireg/TextSegmentation/experience/
