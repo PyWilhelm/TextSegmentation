@@ -7,20 +7,24 @@ from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation, Masking, TimeDistributedDense
 from keras.layers.embeddings import Embedding
 from keras.layers.recurrent import LSTM
+import sys
 
 alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-X = pickle.load(open('../training_x', 'rb'))
-# X_bitmap = np.zeros((X.shape[0], X.shape[1], 54), dtype=np.bool)
-# for i in range(X.shape[0]):
-#     for j in range(X.shape[1]):
-#         X_bitmap[i][j][X[i][j]] = 1
-# print(X_bitmap.shape)
-# print(X_bitmap[1])
+train_x_file = '../' + sys.argv[1]
+train_y_file = '../' + sys.argv[2]
+modelfile = sys.argv[3]
+# test_x_file = '../' + sys.argv[3]
+# test_y_file = '../' + sys.argv[4]
+
+X = pickle.load(open(train_x_file, 'rb'))
+X_bitmap = np.zeros((X.shape[0], X.shape[1], 54), dtype=np.bool)
+for i in range(X.shape[0]):
+    for j in range(X.shape[1]):
+        X_bitmap[i][j][X[i][j]] = 1
+
 #
-# np.save('X_bitmap.dat', X_bitmap)
-X_bitmap = np.load('X_bitmap.dat.npy')
-y = pickle.load(open('../training_y', 'rb'))
+y = pickle.load(open(train_y_file, 'rb'))
 all_y = np.array([np_utils.to_categorical(sample, 2) for sample in y])
 print(all_y.shape)
 print('loaded')
@@ -43,4 +47,4 @@ score, acc = model.evaluate(X_bitmap, all_y,
                             batch_size=32,
                             show_accuracy=True)
 
-model.save_weights('model')
+model.save_weights(modelfile)

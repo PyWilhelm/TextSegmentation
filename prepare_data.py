@@ -51,7 +51,8 @@ def prepare_data(filename, destname):
     pickle.dump(y, open(destname + '_y', 'wb'))
 
 if __name__ == '__main__':
-    filename = sys.argv[0]
-    destname = sys.argv[1]
+    print(sys.argv)
+    filename = sys.argv[1]
+    destname = sys.argv[2]
     prepare_data(filename, destname)
     print('done')
