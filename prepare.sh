@@ -10,4 +10,4 @@
 #BSUB -q kurs3
 
 cd /home/kurse/oe14ireg/TextSegmentation
-THEANO_FLAGS='mode=FAST_RUN,device=gpu,force_device=True,floatX=float32' python3 /home/kurse/oe14ireg/TextSegmentation/prepare_data.py 2.bz2 training > out.txt
+THEANO_FLAGS='mode=FAST_RUN,device=gpu,force_device=True,floatX=float32' python3 /home/kurse/oe14ireg/TextSegmentation/prepare_data.py 2.bz2 training
