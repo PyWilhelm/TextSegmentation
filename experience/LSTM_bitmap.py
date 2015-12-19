@@ -42,8 +42,5 @@ model.compile(loss='binary_crossentropy',
 print("Train...")
 model.fit(X_bitmap, all_y, nb_epoch=3,
           validation_split=0.2, show_accuracy=True)
-score, acc = model.evaluate(X_bitmap, all_y,
-                            batch_size=32,
-                            show_accuracy=True)
 
 model.save_weights(modelfile)
