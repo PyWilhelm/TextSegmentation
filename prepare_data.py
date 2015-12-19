@@ -11,7 +11,7 @@ import sys
 MAX_CHAR_LENGTH = 200
 
 alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-def prepare_data(filename):
+def prepare_data(filename, destname):
     pages = wc.extract_pages(bz2.BZ2File(filename), ('0',))
     corpus = []
     x = []
@@ -45,12 +45,13 @@ def prepare_data(filename):
         if len(sent_x) != MAX_CHAR_LENGTH:
             print(len(sent_x))
 
-
     x = np.array(x)
     y = np.array(y)
-    pickle.dump(x, open('training_x', 'wb'))
-    pickle.dump(y, open('training_y', 'wb'))
+    pickle.dump(x, open(destname + '_x', 'wb'))
+    pickle.dump(y, open(destname + '_y', 'wb'))
 
 if __name__ == '__main__':
     filename = sys.argv[0]
-    prepare_data(filename)
+    destname = sys.argv[1]
+    prepare_data(filename, destname)
+    print('done')
