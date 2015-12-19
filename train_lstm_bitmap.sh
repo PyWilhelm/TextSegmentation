@@ -1,10 +1,10 @@
 #!/bin/bash
 
-#BSUB -J "deepnlp sample program"
-#BSUB -eo /home/kurse/oe14ireg/deepnlp/sample_program/stderr.txt
-#BSUB -oo /home/kurse/oe14ireg/deepnlp/sample_program/stdout.txt
+#BSUB -J "TextSegmentation experience"
+#BSUB -eo /home/kurse/oe14ireg/TextSegmentation/experience/stderr.txt
+#BSUB -oo /home/kurse/oe14ireg/TextSegmentation/experience/stdout.txt
 #BSUB -n 1
-#BSUB -M 2048
+#BSUB -M 10000
 #BSUB -W 60
 #BSUB -x
 #BSUB -q kurs3
