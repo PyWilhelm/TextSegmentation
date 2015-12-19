@@ -1,6 +1,8 @@
 #!/bin/bash
 
 #BSUB -J "TextSegmentation experience"
+#BSUB -u ziyang.li.nk@gmail.com
+#BSUB -N
 #BSUB -eo /home/kurse/oe14ireg/TextSegmentation/experience/stderr.txt
 #BSUB -oo /home/kurse/oe14ireg/TextSegmentation/experience/stdout.txt
 #BSUB -n 1
