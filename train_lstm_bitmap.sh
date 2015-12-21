@@ -12,4 +12,4 @@
 #BSUB -q kurs3
 
 cd /home/kurse/oe14ireg/TextSegmentation/experience/
-THEANO_FLAGS='mode=FAST_RUN,device=gpu,force_device=True,floatX=float32' python3 /home/kurse/oe14ireg/TextSegmentation/experience/LSTM_bitmap.py training_x training_y LSTM_bitmap.model
+THEANO_FLAGS='mode=FAST_RUN,device=gpu,force_device=True,floatX=float32' python3 /home/kurse/oe14ireg/TextSegmentation/experience/LSTM_bitmap.py test1_x test1_y LSTM_bitmap.model
