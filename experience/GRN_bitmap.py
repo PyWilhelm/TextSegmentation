@@ -6,14 +6,14 @@ from keras.utils import np_utils
 from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation, Masking, TimeDistributedDense
 from keras.layers.embeddings import Embedding
-from keras.layers.recurrent import LSTM
+from keras.layers.recurrent import GRU
 import sys
 
 
 def get_model():
     model = Sequential()
     # model.add(Embedding(54, 32, input_length=200))
-    model.add(LSTM(100, return_sequences=True, input_shape=(200, 54)))
+    model.add(GRU(100, return_sequences=True, input_shape=(200, 54)))
     model.add(Dropout(0.5))
     model.add(TimeDistributedDense(2))
     model.add(Activation('sigmoid'))
