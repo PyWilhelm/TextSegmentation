@@ -1,0 +1,119 @@
+%
+% File acl2015.tex
+%
+% Contact: car@ir.hit.edu.cn, gdzhou@suda.edu.cn
+%%
+%% Based on the style files for ACL-2014, which were, in turn,
+%% Based on the style files for ACL-2013, which were, in turn,
+%% Based on the style files for ACL-2012, which were, in turn,
+%% based on the style files for ACL-2011, which were, in turn, 
+%% based on the style files for ACL-2010, which were, in turn, 
+%% based on the style files for ACL-IJCNLP-2009, which were, in turn,
+%% based on the style files for EACL-2009 and IJCNLP-2008...
+
+%% Based on the style files for EACL 2006 by 
+%%e.agirre@ehu.es or Sergi.Balari@uab.es
+%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+\documentclass[11pt]{article}
+\usepackage{acl2015}
+\usepackage{times}
+\usepackage{url}
+\usepackage{latexsym}
+
+%\setlength\titlebox{5cm}
+
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
+
+
+\title{Deep Learning in Text Segmentation}
+
+\author{Ziyang Li \\
+  {\tt ziyang.li.nk@gmail.com} \\\And
+  Second Author \\
+  {\tt email@domain} \\}
+
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\end{abstract}
+
+\section{Introduction}
+
+\section{Text Segmentation}
+
+\subsection{N-Gram Model}
+
+\subsection{Character-based Tagging}
+
+\subsection{Word Perceptron}
+
+\section{Deep Learning for Text Segmentation}
+
+\subsection{Gated Recursive Neural Network}
+
+\subsection{Long Short Term Memory Neural Network}
+
+\section{Experiments}
+We evaluate the several alternative models on a subset of Wikipedia corpus. In order to the evaluation simpler and more understandable, only English corpus is used. We use precision, recall and F1-score to evaluate the models.
+
+
+\subsection{Prepare Dataset}
+We use the Wikipedia Corpus in English. It provides a huge number of articles. The first phase to transform the corpus to the training labeled dataset. All tags of HTML are removed, so that the article is in raw-text format. After that the article is separated by sentences, and remove all the non-letter characters, such as white spaces, punctuations. The last phase is to set up a label for each letter. Here we use two classes to lable the data. One of them is TRUE, that means there is a segmentation after this letter, and the opposite class is FALSE. For example, the sentence ``Nature language processing is cool.'' will be transformed to a vector of raw data ("Naturelanguageprocessingiscool") and the corresponding vector of labels("FFFFFTFFFFFFFTFFFFFFFFFTFTFFFT"). 
+
+
+The second phase is character embeddings. Actually this phase can be treated as the first hidden layer of the neural network. Because the neural network cannot process the sybomlic data directly, the letters must be transformed to distributed vectors firstly. Here two approaches are used, Bitmap and letter2vec. 
+
+\begin{itemize}
+\item Bitmap
+
+Formally, we have a character dictionary C of size |C|. [for English it simple, 0-9a-zA-Z] Each character c in C, is represented as a 0-1 vector Vc = (v0, ..., v|c|, vi=0 if Ci!=c, vi=1 if Ci==c). Therefore, for each sentence S we have a matrix M{|C|*|S|}. The metrix is the actual input data fed to neural network. 
+This method is very simple to implement and interprete. However, it has some disavantages. The matrix is very sparse, so it wastes quite much memory space. Seconds, all characters are treated as with the equal weight, but as we known, the vowel letters and consonant letters shoule has different importance. Besides, the frequence of letters usually has a huge difference, e.g. `c' vs. `x'. 
+\item letter2vec
+
+The idea is 
+\end{itemize}
+
+\subsection{Setup Models}
+
+
+
+\subsection{Results}
+
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|rl|}
+\hline \bf Type of Text & \bf Font Size & \bf Style \\ \hline
+paper title & 15 pt & bold \\
+author names & 12 pt & bold \\
+author affiliation & 12 pt & \\
+the word ``Abstract'' & 12 pt & bold \\
+section titles & 12 pt & bold \\
+document text & 11 pt  &\\
+captions & 11 pt & \\
+abstract text & 10 pt & \\
+bibliography & 10 pt & \\
+footnotes & 9 pt & \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{font-table} Font guide. }
+\end{table}
+
+\section{Conclusion}
+
+
+\section*{Acknowledgments}
+
+
+% include your own bib file like this:
+%\bibliographystyle{acl}
+%\bibliography{acl2015}
+
+\end{document}
