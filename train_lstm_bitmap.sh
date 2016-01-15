@@ -6,7 +6,7 @@
 #BSUB -eo /home/kurse/oe14ireg/TextSegmentation/experience/stderr.txt
 #BSUB -oo /home/kurse/oe14ireg/TextSegmentation/experience/stdout.txt
 #BSUB -n 1
-#BSUB -M 20480
+#BSUB -M 10240
 #BSUB -q kurs3
 #BSUB -x
 
