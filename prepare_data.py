@@ -57,9 +57,7 @@ def prepare_data(filename, destname):
 
 if __name__ == '__main__':
     print(sys.argv)
-    # filename = sys.argv[1]
-    # destname = sys.argv[2]
-    filename = '2.bz2'
-    destname = 'validate'
+    filename = sys.argv[1]
+    destname = sys.argv[2]
     prepare_data(filename, destname)
     print('done')
