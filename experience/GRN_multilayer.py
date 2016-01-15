@@ -6,14 +6,16 @@ from keras.utils import np_utils
 from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation, Masking, TimeDistributedDense
 from keras.layers.embeddings import Embedding
-from keras.layers.recurrent import LSTM
+from keras.layers.recurrent import GRU
 import sys
 
 
 def get_model():
     model = Sequential()
-    model.add(Embedding(54, 32, input_length=200))
-    model.add(LSTM(100, return_sequences=True, input_shape=(200, 54)))
+    # model.add(Embedding(54, 32, input_length=200))
+    model.add(GRU(100, return_sequences=True, input_shape=(200, 54)))
+    model.add(Dropout(0.2))
+    model.add(GRU(100, return_sequences=True))
     model.add(Dropout(0.5))
     model.add(TimeDistributedDense(2))
     model.add(Activation('sigmoid'))
@@ -26,13 +28,13 @@ def get_model():
 
 def prepare_data(x_filename, y_filename):
     X = pickle.load(open(x_filename, 'rb'))
-    #X_bitmap = np.zeros((X.shape[0], X.shape[1], 54), dtype=np.bool)
-    #for i in range(X.shape[0]):
-    #    for j in range(X.shape[1]):
-    #        X_bitmap[i][j][X[i][j]] = 1
+    X_bitmap = np.zeros((X.shape[0], X.shape[1], 54), dtype=np.bool)
+    for i in range(X.shape[0]):
+        for j in range(X.shape[1]):
+            X_bitmap[i][j][X[i][j]] = 1
     y = pickle.load(open(y_filename, 'rb'))
     all_y = np.array([np_utils.to_categorical(sample, 2) for sample in y])
-    return X, all_y
+    return X_bitmap, all_y
 
 
 if __name__ == '__main__':
