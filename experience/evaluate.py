@@ -14,7 +14,7 @@ validate_y_file = '../' + sys.argv[2]
 
 validate_x, validate_y = Model.prepare_data(validate_x_file, validate_y_file)
 
-predict_y = model_network.predict({'input': validate_x})['output'] >= 0.5
+predict_y = model_network.predict_classes(validate_x)
 print(predict_y)
 shape_y = predict_y.shape
 predict_y = predict_y.reshape((shape_y[0] * shape_y[1], shape_y[2]))
