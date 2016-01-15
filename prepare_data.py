@@ -34,9 +34,6 @@ def prepare_data(filename, destname):
                     corpus.append(tokens[i:])
     count = 0
     for sent in corpus:
-        count += 1
-        if count > 100000:
-            break
         sent_y = []
         sent_x = []
         for token in sent:
