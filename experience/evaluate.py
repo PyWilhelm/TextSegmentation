@@ -4,8 +4,8 @@ import pickle
 import numpy as np
 from sklearn.metrics import precision_recall_fscore_support
 
-Model = BiLSTM_bitmap
-weight_file = 'bilstm_bitmap.model'
+Model = LSTM_bitmap
+weight_file = 'LSTM_bitmap.model'
 model_network = Model.get_model()
 model_network.load_weights(weight_file)
 
