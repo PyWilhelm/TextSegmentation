@@ -49,7 +49,7 @@ if __name__ == '__main__':
     print('loaded')
     model = get_model()
     print("Train...")
-    model.fit(X_bitmap, all_y, nb_epoch=2,
+    model.fit(X_bitmap, all_y, nb_epoch=10,
               validation_split=0.2, show_accuracy=True)
 
     model.save_weights(modelfile)
