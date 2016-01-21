@@ -16,7 +16,7 @@ def get_model():
     model.add(LSTM(100, return_sequences=True, input_shape=(200, 270)))
     model.add(Dropout(0.2))
     model.add(LSTM(100, return_sequences=True))
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.2))
     model.add(TimeDistributedDense(2))
     model.add(Activation('sigmoid'))
     print('compile')

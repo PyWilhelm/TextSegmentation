@@ -15,7 +15,7 @@ def get_model():
     model = Sequential()
     # model.add(Embedding(54, 32, input_length=200))
     model.add(GRU(100, return_sequences=True, input_shape=(200, 270)))
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.2))
     model.add(TimeDistributedDense(2))
     model.add(Activation('sigmoid'))
     print('compile')

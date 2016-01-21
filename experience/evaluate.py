@@ -32,7 +32,7 @@ for validate_x, validate_y in iterator:
     print(predict_y.shape, validate_y.shape)
     a = precision_recall_fscore_support(validate_y, predict_y, average='binary')
     print(a)
-    results.append(a)
+    results.append(a[:3])
 
 results = np.array(results)
 print('final result:')
