@@ -7,6 +7,7 @@ from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation, Masking, TimeDistributedDense
 from keras.layers.embeddings import Embedding
 from keras.layers.recurrent import LSTM
+from iterate import prepare_data
 
 
 def get_model():
@@ -25,16 +26,6 @@ def get_model():
     return model
 
 
-def prepare_data(x_filename, y_filename):
-    X = pickle.load(open(x_filename, 'rb'))
-    X_bitmap = np.zeros((X.shape[0], X.shape[1], 54), dtype=np.bool)
-    for i in range(X.shape[0]):
-        for j in range(X.shape[1]):
-            X_bitmap[i][j][X[i][j]] = 1
-    y = pickle.load(open(y_filename, 'rb'))
-    all_y = np.array([np_utils.to_categorical(sample, 2) for sample in y])
-    return X_bitmap, all_y
-
 if __name__ == '__main__':
 
     train_x_file = '../' + sys.argv[1]
@@ -43,18 +34,12 @@ if __name__ == '__main__':
     # test_x_file = '../' + sys.argv[3]
     # test_y_file = '../' + sys.argv[4]
 
-    X = pickle.load(open(train_x_file, 'rb'))
-    X_bitmap = np.zeros((X.shape[0], X.shape[1], 54), dtype=np.bool)
-    for i in range(X.shape[0]):
-        for j in range(X.shape[1]):
-            X_bitmap[i][j][X[i][j]] = 1
-
-    #
-    y = pickle.load(open(train_y_file, 'rb'))
-    all_y = np.array([np_utils.to_categorical(sample, 2) for sample in y])
+    print('loaded')
     model = get_model()
     print("Train...")
-    model.fit(X_bitmap, all_y, nb_epoch=2,
-              validation_split=0.2, show_accuracy=True)
-
+    for epoch in range(2):
+        iterator = prepare_data(train_x_file, train_y_file)
+        print('epoch:', epoch)
+        for x, y in iterator:
+            model.fit(x,y, nb_epoch=1, show_accuracy=True)
     model.save_weights(modelfile)
