@@ -12,9 +12,9 @@ def get_model():
     print('build model')
     model = Graph()
     model.add_input(name='input', input_shape=(200, 54*5))
-    model.add_node(LSTM(100, return_sequences=True, input_shape=(200, 54*5)),
+    model.add_node(LSTM(128, return_sequences=True, input_shape=(200, 54*5)),
                    name='forward', input='input')
-    model.add_node(LSTM(100, return_sequences=True, input_shape=(200, 54*5), go_backwards=True),
+    model.add_node(LSTM(128, return_sequences=True, input_shape=(200, 54*5), go_backwards=True),
                    name='backward', input='input')
     model.add_node(Dropout(0.2), name='dropout', inputs=['forward', 'backward'])
     model.add_node(TimeDistributedDense(2, activation='sigmoid'), name='sigmoid', input='dropout')
