@@ -5,7 +5,7 @@ import numpy as np
 from sklearn.metrics import precision_recall_fscore_support
 
 Model = LSTM_bitmap
-weight_file = 'LSTM_bitmap.model'
+weight_file = 'lstm_l2v.model'
 model_network = Model.get_model()
 model_network.load_weights(weight_file)
 
