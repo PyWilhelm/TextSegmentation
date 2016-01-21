@@ -37,7 +37,7 @@ def prepare_data(x_filename, y_filename, size=10000):
                 index = X[i][j + k] + 54 * (k + 2)
                 X_bitmap[i % size][j][index] = 1
 
-        if i % 1000 == 999:
+        if (i % size) == (size - 1):
             yield X_bitmap, all_y[i - size + 1: i + 1]
             X_bitmap = np.zeros((size, X.shape[1], 54*5), dtype=np.bool)
 
