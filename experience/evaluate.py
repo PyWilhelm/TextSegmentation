@@ -41,7 +41,6 @@ if model != 'bilstmb':
         predict_y = (predict_y == [0])[:, 0]
         validate_y = validate_y.reshape((shape_y[0] * shape_y[1], shape_y[2]))
         validate_y = (validate_y == [0])[:, 0]
-        print(predict_y.shape, validate_y.shape)
         a = precision_recall_fscore_support(validate_y, predict_y, average='binary')
         print(a)
         results.append(a[:3])
@@ -58,4 +57,17 @@ else:
     model_network.load_weights(weight_file)
 
     iterator = prepare_data(validate_x_file, validate_y_file)
-
+    results = []
+    for validate_x, validate_y in iterator:
+        predict_y = model_network.predict({'input': validate_x})['output'] >= 0.5
+        shape_y = predict_y.shape
+        predict_y = predict_y.reshape((shape_y[0] * shape_y[1], shape_y[2]))
+        predict_y = (predict_y == [0])[:, 0]
+        validate_y = validate_y.reshape((shape_y[0] * shape_y[1], shape_y[2]))
+        validate_y = (validate_y == [0])[:, 0]
+        a = precision_recall_fscore_support(validate_y, predict_y, average='binary')
+        print(a)
+        results.append(a[:3])
+    results = np.array(results)
+    print('final result:')
+    print(np.average(results, axis=0))
