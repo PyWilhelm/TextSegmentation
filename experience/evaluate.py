@@ -11,7 +11,7 @@ validate_y_file = '../' + sys.argv[2]
 
 model = sys.argv[3]
 
-if model == 'lstm-b-1':
+if model == 'lstmb1':
     Model = LSTM_bitmap
     weight_file = 'LSTM_bitmap.model'
 
