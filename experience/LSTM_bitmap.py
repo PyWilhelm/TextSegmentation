@@ -62,5 +62,5 @@ if __name__ == '__main__':
         iterator = prepare_data(train_x_file, train_y_file)
         print('epoch:', epoch)
         for x, y in iterator:
-            model.fit(x,y, nb_epoch=1, batch_size=32, show_accuracy=True)
+            model.fit(x,y, nb_epoch=1, show_accuracy=True)
     model.save_weights(modelfile)
