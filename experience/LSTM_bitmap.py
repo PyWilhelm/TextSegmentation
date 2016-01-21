@@ -24,8 +24,9 @@ def get_model():
     return model
 
 
-def prepare_data(x_filename, y_filename, size=10000):
+def prepare_data(x_filename, y_filename, size=3000):
     X = pickle.load(open(x_filename, 'rb'))
+    print(X.shape)
     X_bitmap = np.zeros((size, X.shape[1], 54*5), dtype=np.bool)
     y = pickle.load(open(y_filename, 'rb'))
     all_y = np.array([np_utils.to_categorical(sample, 2) for sample in y])
