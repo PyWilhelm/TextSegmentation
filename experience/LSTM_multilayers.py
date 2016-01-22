@@ -13,7 +13,7 @@ from iterate import prepare_data
 def get_model():
     model = Sequential()
     # model.add(Embedding(54, 32, input_length=200))
-    model.add(LSTM(128, return_sequences=True, input_shape=(200, 270)))
+    model.add(LSTM(128, return_sequences=True, input_shape=(200, 50)))
     model.add(Dropout(0.2))
     model.add(LSTM(128, return_sequences=True))
     model.add(Dropout(0.2))

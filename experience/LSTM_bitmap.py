@@ -7,7 +7,7 @@ import sys
 
 def get_model():
     model = Sequential()
-    model.add(LSTM(128, return_sequences=True, input_shape=(200, 54*5)))
+    model.add(LSTM(128, return_sequences=True, input_shape=(200, 10*5)))
     model.add(Dropout(0.2))
     model.add(TimeDistributedDense(2))
     model.add(Activation('sigmoid'))
