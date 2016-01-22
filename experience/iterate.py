@@ -3,7 +3,9 @@ import numpy as np
 from keras.utils import np_utils
 
 
+
 def prepare_data(x_filename, y_filename, size=5000):
+
     X = pickle.load(open(x_filename, 'rb'))
     print(X.shape)
     X_bitmap = np.zeros((size, X.shape[1], 54*5), dtype=np.bool)
