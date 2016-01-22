@@ -4,13 +4,18 @@ from keras.utils import np_utils
 from gensim.models import Word2Vec
 from pprint import pprint
 
-l2v = Word2Vec.load('../word2vec.dat')
-lookup = np.zeros((54, 10))
-for i in range(65, 91):
-    lookup[i - 65] = l2v[chr(i)]
-for i in range(97, 123):
-    lookup[i - 97 + 26] = l2v[chr(i)]
-lookup[-2] = l2v[' ']
+# l2v = Word2Vec.load('../word2vec.dat')
+# lookup = np.zeros((54, 10))
+# for i in range(65, 91):
+#     lookup[i - 65] = l2v[chr(i)]
+# for i in range(97, 123):
+#     lookup[i - 97 + 26] = l2v[chr(i)]
+# lookup[-2] = l2v[' ']
+#
+# np.save('lookup', lookup)
+#
+lookup = np.load('lookup.npy')
+print(lookup, lookup.shape)
 
 
 def _prepare_data(x_filename, y_filename, size=5000):
